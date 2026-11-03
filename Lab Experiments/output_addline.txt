@@ -1,0 +1,5 @@
+1 int main()
+2 {
+3 printf("Hello");
+4 return 0;
+5 }

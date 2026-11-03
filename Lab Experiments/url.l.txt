@@ -1,0 +1,28 @@
+
+%{
+#include <stdio.h>
+%}
+
+%%
+https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}    { printf("Valid URL\n"); }
+.*                                        { printf("Invalid URL\n"); }
+%%
+
+int main()
+{
+    char url[200];
+
+    printf("Enter URL: ");
+    scanf("%199s", url);
+
+    YY_BUFFER_STATE buf = yy_scan_string(url);
+    yylex();
+    yy_delete_buffer(buf);
+
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

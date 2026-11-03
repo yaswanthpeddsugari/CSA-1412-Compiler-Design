@@ -1,0 +1,45 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+"//".*                         ;
+"/*"([^*]|\*+[^*/])*\*+"/"     ;
+\n                             { fprintf(yyout, "\n"); }
+.                              { fprintf(yyout, "%s", yytext); }
+%%
+
+int main()
+{
+    FILE *in, *out;
+
+    in = fopen("input_comments.txt", "r");
+    if (in == NULL)
+    {
+        printf("Cannot open input_comments.txt\n");
+        return 1;
+    }
+
+    out = fopen("output_comments.txt", "w");
+    if (out == NULL)
+    {
+        printf("Cannot create output_comments.txt\n");
+        fclose(in);
+        return 1;
+    }
+
+    yyin = in;
+    yyout = out;
+    yylex();
+
+    fclose(in);
+    fclose(out);
+
+    printf("Comments removed. Check output_comments.txt\n");
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

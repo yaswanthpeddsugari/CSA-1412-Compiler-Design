@@ -1,0 +1,47 @@
+
+%{
+#include <stdio.h>
+%}
+
+%%
+"//".*                          ;
+"/*"([^*]|\*+[^*/])*\*+"/"      ;
+[\t\n]+                         ;
+.                               { ECHO; }
+%%
+
+int main()
+{
+    yyin = fopen("input_remove_c_n_t.txt", "r");
+
+    if (yyin == NULL)
+    {
+        printf("Unable to open input_remove_c_n_t.txt\n");
+        return 1;
+    }
+
+    FILE *temp = fopen("output_remove_c_n_t.txt", "w");
+
+    if (temp == NULL)
+    {
+        printf("Unable to create output_remove_c_n_t.txt\n");
+        fclose(yyin);
+        return 1;
+    }
+
+    yyout = temp;
+    yylex();
+
+    fclose(yyin);
+    fclose(temp);
+
+    printf("New lines, comments, and tabs removed successfully.\n");
+    printf("Output saved in output_remove_c_n_t.txt\n");
+
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

@@ -1,0 +1,24 @@
+
+%{
+#include <stdio.h>
+%}
+
+%%
+"#include"[ \t]*"<"[^>]+">"    { printf("Header file: %s\n", yytext); }
+"#include"[ \t]*\"[^\"]+\"     { printf("Header file: %s\n", yytext); }
+"#define"[ \t]+[A-Za-z_][A-Za-z0-9_]*  { printf("Macro: %s\n", yytext); }
+[ \t\n]+                       ;
+.                              ;
+%%
+
+int main()
+{
+    printf("Enter statements:\n");
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

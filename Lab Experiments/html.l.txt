@@ -1,0 +1,47 @@
+%{
+#include <stdio.h>
+int count = 0;
+%}
+
+%%
+"<"[^>]+">"    {
+                   fprintf(yyout, "%s\n", yytext);
+                   count++;
+                }
+.|\n           ;
+%%
+
+int main()
+{
+    yyin = fopen("input_html.txt", "r");
+
+    if (yyin == NULL)
+    {
+        printf("Unable to open input_html.txt\n");
+        return 1;
+    }
+
+    yyout = fopen("output_html.txt", "w");
+
+    if (yyout == NULL)
+    {
+        printf("Unable to create output_html.txt\n");
+        fclose(yyin);
+        return 1;
+    }
+
+    yylex();
+
+    fprintf(yyout, "\nNumber of HTML tags = %d\n", count);
+
+    fclose(yyin);
+    fclose(yyout);
+
+    printf("Output saved in output_html.txt\n");
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

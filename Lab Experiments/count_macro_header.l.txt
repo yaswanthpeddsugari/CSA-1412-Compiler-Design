@@ -1,0 +1,29 @@
+
+%{
+#include <stdio.h>
+int macro = 0, header = 0;
+%}
+
+%%
+^[ \t]*"#include"[ \t]*"<"[^>\n]+">"  { header++; }
+^[ \t]*"#include"[ \t]*\"[^"\n]+\"   { header++; }
+^[ \t]*"#define"[ \t]+[A-Za-z_][A-Za-z0-9_]*  { macro++; }
+\n                                      ;
+.                                       ;
+%%
+
+int main()
+{
+    printf("Enter statements:\n");
+    yylex();
+
+    printf("Number of header files = %d\n", header);
+    printf("Number of macros = %d\n", macro);
+
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

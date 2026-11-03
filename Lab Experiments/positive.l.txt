@@ -1,0 +1,22 @@
+
+%{
+#include <stdio.h>
+%}
+
+%%
+-[0-9]+     { printf("Negative number\n"); }
+[0-9]+      { printf("Positive number\n"); }
+.|\n        ;
+%%
+
+int main()
+{
+    printf("Enter a number:\n");
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

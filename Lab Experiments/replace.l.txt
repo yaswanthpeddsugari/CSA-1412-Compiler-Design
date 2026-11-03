@@ -1,0 +1,27 @@
+%{
+#include <stdio.h>
+#include <string.h>
+%}
+
+%%
+[a-zA-Z]+    {
+                if(strcmp(yytext, "hello") == 0)
+                    printf("welcome");
+                else
+                    printf("%s", yytext);
+             }
+[ \t\n]+     { printf("%s", yytext); }
+.            { printf("%s", yytext); }
+%%
+
+int main()
+{
+    printf("Enter a sentence:\n");
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

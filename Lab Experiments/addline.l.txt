@@ -1,0 +1,47 @@
+
+%{
+#include <stdio.h>
+int line = 1;
+FILE *out;
+%}
+
+%%
+\n      { fprintf(out, "\n%d ", ++line); }
+.       { fprintf(out, "%s", yytext); }
+%%
+
+int main()
+{
+    yyin = fopen("input_addline.c", "r");
+
+    if (yyin == NULL)
+    {
+        printf("Unable to open input_addline.c\n");
+        return 1;
+    }
+
+    out = fopen("output_addline.txt", "w");
+
+    if (out == NULL)
+    {
+        printf("Unable to create output_addline.txt\n");
+        fclose(yyin);
+        return 1;
+    }
+
+    fprintf(out, "%d ", line);
+    yylex();
+
+    fclose(yyin);
+    fclose(out);
+
+    printf("Line numbers added successfully.\n");
+    printf("Check output_addline.txt for the result.\n");
+
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
