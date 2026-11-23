@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char s[30];
+
+    printf("Enter token: ");
+    scanf("%s", s);
+
+    if (isalpha(s[0]) || s[0] == '_')
+        printf("Identifier\n");
+    else if (isdigit(s[0]))
+        printf("Number\n");
+    else if (strchr("+-*/=<>", s[0]))
+        printf("Operator\n");
+    else
+        printf("Special Symbol\n");
+
+    return 0;
+}

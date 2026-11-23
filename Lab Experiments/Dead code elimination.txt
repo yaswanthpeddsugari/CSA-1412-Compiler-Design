@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main()
+{
+    int a, b;
+
+    printf("Enter values of a and b: ");
+    scanf("%d%d", &a, &b);
+
+    printf("a = %d\n", a);
+    printf("b = %d\n", b);
+
+    printf("Dead code: unused statements are removed.\n");
+
+    return 0;
+}

@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main()
+{
+    int a;
+    float b, result;
+
+    printf("Enter integer: ");
+    scanf("%d", &a);
+
+    printf("Enter float: ");
+    scanf("%f", &b);
+
+    result = a + b;
+
+    printf("Integer value = %d\n", a);
+    printf("Float value = %.2f\n", b);
+    printf("Converted result = %.2f\n", result);
+
+    return 0;
+}
